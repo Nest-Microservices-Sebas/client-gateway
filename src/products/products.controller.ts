@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Inject, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { catchError } from 'rxjs';
+import { catchError, firstValueFrom } from 'rxjs';
 import { PaginationDto } from 'src/common';
 import { NATS_SERVICE } from 'src/config';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -30,7 +30,7 @@ export class ProductsController {
   async findProductById(@Param('id', ParseIntPipe) id: number) {
     // try {
     //   const product = await firstValueFrom(
-    //     this.productsClient.send({ cmd: 'find_one_product' }, { id })
+    //     this.client.send({ cmd: 'find_one_product' }, { id })
     //   );
 
     //   return product;

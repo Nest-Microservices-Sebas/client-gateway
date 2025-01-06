@@ -10,6 +10,13 @@ export class RpcCustomExceptionFilter implements ExceptionFilter {
 
         const rpcError = exception.getError();
 
+        if(rpcError.toString().includes('Empty response')) {
+            return response.status(500).json({
+                status: 500,
+                message: 'There are no suscribers listening to that message'
+            }); 
+        }
+
         if (
             typeof rpcError === 'object' &&
             'status' in rpcError &&
